@@ -1,21 +1,15 @@
-/*
- * https1.js
- * Copyright (C) 2014 kaoru <kaoru@bsd>
- */
-var https = require('https');
-var fs = require('fs');
-var ssl_server_key = 'server_key.pem';
-var ssl_server_crt = 'server_crt.pem';
-var port = 8443;
- 
-var options = {
-        key: fs.readFileSync(ssl_server_key),
-        cert: fs.readFileSync(ssl_server_crt)
-};
- 
-https.createServer(options, function (req,res) {
-        res.writeHead(200, {
-                'Content-Type': 'text/plain'
-        });
-        res.end("Hello, world\n");
-}).listen(port);
+const http = require("http");
+const port = 3000;
+
+const server = http.createServer((request, response) => {
+    response.writeHead(200, {
+      "Content-Type": "text/html"
+    });
+
+    const responseMessage = "<h1>Hello World</h1>";
+    response.end(responseMessage);
+    console.log(`Sent a response : ${responseMessage}`);
+});
+
+server.listen(port);
+console.log(`The server has started and is listening on port number: ${port}`);
