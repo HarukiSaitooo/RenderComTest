@@ -1,12 +1,21 @@
-const http = require("http");
-
-const server = http.createServer();
-
-server.on("request", function (req, res) {
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.write("Hello");
-  res.end();
-});
-
-server.listen(8080);
-console.log("server listen...");
+/*
+ * https1.js
+ * Copyright (C) 2014 kaoru <kaoru@bsd>
+ */
+var https = require('https');
+var fs = require('fs');
+var ssl_server_key = 'server_key.pem';
+var ssl_server_crt = 'server_crt.pem';
+var port = 8443;
+ 
+var options = {
+        key: fs.readFileSync(ssl_server_key),
+        cert: fs.readFileSync(ssl_server_crt)
+};
+ 
+https.createServer(options, function (req,res) {
+        res.writeHead(200, {
+                'Content-Type': 'text/plain'
+        });
+        res.end("Hello, world\n");
+}).listen(port);
